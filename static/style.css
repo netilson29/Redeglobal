@@ -11,6 +11,7 @@ body {
     background-color: #f4f6f9;
     color: #333;
     line-height: 1.6;
+    transition: all 0.3s ease;
 }
 
 /* Cabeçalho */
@@ -21,11 +22,13 @@ header.topo {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
 }
 
-.logo {
+header.topo img {
     height: 55px;
+    max-width: 100%;
 }
 
 /* Navegação */
@@ -33,6 +36,7 @@ header.topo {
     list-style: none;
     display: flex;
     gap: 2rem;
+    flex-wrap: wrap;
 }
 
 .menu li a {
@@ -160,4 +164,32 @@ footer {
     padding: 1rem;
     margin-top: 3rem;
     box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* RESPONSIVIDADE - Celulares e telas pequenas */
+@media (max-width: 768px) {
+    header.topo {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .menu {
+        flex-direction: column;
+        gap: 1rem;
+        padding-top: 1rem;
+    }
+
+    .titulo-principal {
+        font-size: 1.5rem;
+    }
+
+    .card img {
+        height: 150px;
+    }
+
+    .sobre p {
+        font-size: 1rem;
+        padding: 0 1rem;
+    }
 }
