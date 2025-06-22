@@ -1,16 +1,13 @@
 from flask import Flask, render_template
 import requests
 from bs4 import BeautifulSoup
+import re
 
 app = Flask(__name__)
 
 def buscar_noticias():
     url = 'https://news.google.com/rss/search?q=tecnologia&hl=pt-PT&gl=PT&ceid=PT:pt'
     resposta = requests.get(url)
-    
-    if resposta.status_code != 200:
-        return []  # Se falhar, retorna lista vazia
-
     soup = BeautifulSoup(resposta.content, 'xml')
     itens = soup.find_all('item')[:10]
 
@@ -18,13 +15,16 @@ def buscar_noticias():
     for item in itens:
         titulo = item.title.text
         link = item.link.text
-        descricao = item.description.text
+        descricao_html = item.description.text
+
+        # Remove todas as tags HTML da descrição
+        descricao_limpa = re.sub('<[^<]+?>', '', descricao_html)
 
         noticia = {
             'titulo': titulo,
             'link': link,
-            'resumo': descricao,
-            'imagem': 'https://source.unsplash.com/400x200/?technology,news'
+            'resumo': descricao_limpa,
+            'imagem': f'https://source.unsplash.com/400x200/?technology,news,{titulo}'
         }
         noticias.append(noticia)
 
