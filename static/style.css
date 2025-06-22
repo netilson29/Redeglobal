@@ -14,35 +14,42 @@ body {
 }
 
 /* Cabeçalho */
-header {
-    background-color: #0a2e50;
+header.topo {
+    background: linear-gradient(to right, #0a2e50, #005f8f);
     color: white;
     padding: 1rem 2rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
 }
 
 .logo {
-    height: 50px;
+    height: 55px;
 }
 
 /* Navegação */
-nav ul {
+.menu {
     list-style: none;
     display: flex;
-    gap: 1.5rem;
+    gap: 2rem;
 }
 
-nav a {
+.menu li a {
     color: white;
     text-decoration: none;
     font-weight: bold;
-    transition: color 0.3s ease;
+    padding: 0.5rem 1rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
 }
 
-nav a:hover {
-    color: #ffd700;
+.menu li a:hover {
+    background-color: white;
+    color: #0a2e50;
+    transform: scale(1.05);
 }
 
 /* Conteúdo principal */
@@ -52,10 +59,11 @@ nav a:hover {
     padding: 0 2rem;
 }
 
-h1 {
+.titulo-principal {
     margin-bottom: 2rem;
     color: #0a2e50;
     text-align: center;
+    font-size: 2rem;
 }
 
 /* Grid de notícias */
@@ -67,14 +75,15 @@ h1 {
 
 .card {
     background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
     overflow: hidden;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
-    transform: scale(1.02);
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
 }
 
 .card img {
@@ -97,13 +106,49 @@ h1 {
 .card a {
     display: inline-block;
     margin: 0 1rem 1rem;
-    color: #0a2e50;
+    padding: 0.5rem 1rem;
+    color: white;
+    background-color: #0a2e50;
+    border-radius: 8px;
     text-decoration: none;
     font-weight: bold;
-    transition: color 0.3s ease;
+    transition: background-color 0.3s ease;
 }
 
 .card a:hover {
+    background-color: #ff5722;
+}
+
+/* Seção Sobre */
+.sobre {
+    background: #e6ecf2;
+    padding: 3rem 2rem;
+    text-align: center;
+    margin-top: 3rem;
+    border-top: 4px solid #0a2e50;
+}
+
+.sobre h2 {
+    color: #0a2e50;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.sobre p {
+    max-width: 800px;
+    margin: 0 auto 1rem;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #444;
+}
+
+.sobre a {
+    color: #0a2e50;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.sobre a:hover {
     color: #ff5722;
 }
 
@@ -114,4 +159,5 @@ footer {
     text-align: center;
     padding: 1rem;
     margin-top: 3rem;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2);
 }

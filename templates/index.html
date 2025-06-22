@@ -12,20 +12,19 @@
         <img src="{{ url_for('static', filename='logo.png') }}" alt="RedeGlobal+" class="logo">
         <nav>
             <ul class="menu">
-                <li><a href="#">Início</a></li>
-                <li><a href="#">Internacional</a></li>
-                <li><a href="#">Tecnologia</a></li>
-                <li><a href="#">Sobre</a></li>
+                <li><a href="#inicio">Início</a></li>
+                <li><a href="#internacional">Internacional</a></li>
+                <li><a href="#sobre">Sobre</a></li>
             </ul>
         </nav>
     </header>
 
-    <main class="container">
+    <main class="container" id="inicio">
         <h1 class="titulo-principal">🌍 Últimas Notícias</h1>
-        <div class="noticias-grid">
+        <div class="noticias-grid" id="internacional">
             {% for noticia in noticias %}
             <div class="card">
-                <img src="{{ noticia.imagem }}" alt="Imagem da notícia">
+                <img src="{{ noticia.imagem or url_for('static', filename='ney.png') }}" alt="Imagem da notícia">
                 <h2>{{ noticia.titulo }}</h2>
                 <p>{{ noticia.resumo }}</p>
                 <a href="{{ noticia.link }}" target="_blank" class="ler-mais">Ler mais</a>
@@ -33,6 +32,13 @@
             {% endfor %}
         </div>
     </main>
+
+    <section class="sobre" id="sobre">
+        <h2>Sobre o RedeGlobal+</h2>
+        <p><strong>RedeGlobal+</strong> é um portal de notícias criado com dedicação e tecnologia por <strong>Aristides King</strong>.</p>
+        <p>Desenvolvido com 💻, paixão e foco em inovação digital.</p>
+        <p>Contato profissional: <a href="mailto:kingaristides@gmail.com">kingaristides@gmail.com</a></p>
+    </section>
 
     <footer>
         <p>&copy; 2025 RedeGlobal+ - Todos os direitos reservados.</p>
