@@ -9,20 +9,37 @@
 </head>
 <body>
     <header class="topo">
-        <img src="{{ url_for('static', filename='logo.png') }}" alt="RedeGlobal+" class="logo">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="RedeGlobal+">
         <nav>
             <ul class="menu">
                 <li><a href="#inicio">Início</a></li>
-                <li><a href="#internacional">Internacional</a></li>
+                <li><a href="#brasil">Brasil</a></li>
+                <li><a href="#portugal">Portugal</a></li>
                 <li><a href="#sobre">Sobre</a></li>
             </ul>
         </nav>
     </header>
 
     <main class="container" id="inicio">
-        <h1 class="titulo-principal">🌍 Últimas Notícias</h1>
-        <div class="noticias-grid" id="internacional">
-            {% for noticia in noticias %}
+        <h1 class="titulo-principal">🌍 Notícias do Brasil</h1>
+        <div class="noticias-grid" id="brasil">
+            {% for noticia in noticias_brasil %}
+            <div class="card">
+                {% if noticia.imagem and noticia.imagem.strip() %}
+                    <img src="{{ noticia.imagem }}" alt="Imagem da notícia">
+                {% else %}
+                    <img src="{{ url_for('static', filename='ney.png') }}" alt="Imagem padrão">
+                {% endif %}
+                <h2>{{ noticia.titulo }}</h2>
+                <p>{{ noticia.resumo }}</p>
+                <a href="{{ noticia.link }}" target="_blank" class="ler-mais">Ler mais</a>
+            </div>
+            {% endfor %}
+        </div>
+
+        <h1 class="titulo-principal">🇵🇹 Notícias de Portugal</h1>
+        <div class="noticias-grid" id="portugal">
+            {% for noticia in noticias_portugal %}
             <div class="card">
                 {% if noticia.imagem and noticia.imagem.strip() %}
                     <img src="{{ noticia.imagem }}" alt="Imagem da notícia">
@@ -39,8 +56,8 @@
 
     <section class="sobre" id="sobre">
         <h2>Sobre o RedeGlobal+</h2>
-        <p><strong>RedeGlobal+</strong> é um portal de notícias criado para conectar o mundo com as informações mais relevantes.</p>
-        <p>Desenvolvido com 💻, paixão e foco em inovação digital por <strong>Aristides King</strong>.</p>
+        <p><strong>RedeGlobal+</strong> é um portal de notícias criado para conectar o Brasil e Portugal com informações internacionais.</p>
+        <p>Desenvolvido com 💻, paixão e foco em inovação digital por <strong>Aristides</strong>.</p>
         <p>Contato profissional: <a href="mailto:kingaristides@gmail.com">kingaristides@gmail.com</a></p>
     </section>
 

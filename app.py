@@ -1,40 +1,54 @@
 from flask import Flask, render_template
-import requests
-from bs4 import BeautifulSoup
-import re
+import feedparser
+import time
 
 app = Flask(__name__)
 
-def buscar_noticias():
-    url = 'https://news.google.com/rss/search?q=tecnologia&hl=pt-PT&gl=PT&ceid=PT:pt'
-    resposta = requests.get(url)
-    soup = BeautifulSoup(resposta.content, 'xml')
-    itens = soup.find_all('item')[:10]
+# URLs dos Feeds
+FEED_BRASIL = 'https://g1.globo.com/rss/g1/internacional/'
+FEED_PORTUGAL = 'https://www.rtp.pt/noticias/rss/internacional'
 
+# Cache das notícias
+cache = {
+    'brasil': {'noticias': [], 'ultima_atualizacao': 0},
+    'portugal': {'noticias': [], 'ultima_atualizacao': 0}
+}
+INTERVALO_ATUALIZACAO = 600  # 10 minutos
+
+def buscar_rss(url):
+    feed = feedparser.parse(url)
     noticias = []
-    for item in itens:
-        titulo = item.title.text
-        link = item.link.text
-        descricao_html = item.description.text
-
-        # Remove todas as tags HTML da descrição
-        descricao_limpa = re.sub('<[^<]+?>', '', descricao_html)
-
-        noticia = {
-            'titulo': titulo,
-            'link': link,
-            'descricao': descricao_limpa,
-            'imagem': f'https://source.unsplash.com/400x200/?technology,news,{titulo}',
-            'fonte': 'Google News'
-        }
-        noticias.append(noticia)
-
+    for entrada in feed.entries:
+        imagem = None
+        if 'media_content' in entrada and len(entrada.media_content) > 0:
+            imagem = entrada.media_content[0].get('url')
+        noticias.append({
+            'titulo': entrada.title,
+            'resumo': entrada.summary,
+            'link': entrada.link,
+            'imagem': imagem
+        })
     return noticias
 
 @app.route('/')
-def home():
-    noticias = buscar_noticias()
-    return render_template('index.html', noticias=noticias)
+def index():
+    agora = time.time()
+
+    # Atualiza Brasil
+    if agora - cache['brasil']['ultima_atualizacao'] > INTERVALO_ATUALIZACAO:
+        cache['brasil']['noticias'] = buscar_rss(FEED_BRASIL)
+        cache['brasil']['ultima_atualizacao'] = agora
+
+    # Atualiza Portugal
+    if agora - cache['portugal']['ultima_atualizacao'] > INTERVALO_ATUALIZACAO:
+        cache['portugal']['noticias'] = buscar_rss(FEED_PORTUGAL)
+        cache['portugal']['ultima_atualizacao'] = agora
+
+    return render_template(
+        'index.html',
+        noticias_brasil=cache['brasil']['noticias'],
+        noticias_portugal=cache['portugal']['noticias']
+    )
 
 if __name__ == '__main__':
     app.run(debug=True)
