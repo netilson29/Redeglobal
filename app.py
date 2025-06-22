@@ -23,8 +23,9 @@ def buscar_noticias():
         noticia = {
             'titulo': titulo,
             'link': link,
-            'resumo': descricao_limpa,
-            'imagem': f'https://source.unsplash.com/400x200/?technology,news,{titulo}'
+            'descricao': descricao_limpa,
+            'imagem': f'https://source.unsplash.com/400x200/?technology,news,{titulo}',
+            'fonte': 'Google News'
         }
         noticias.append(noticia)
 
