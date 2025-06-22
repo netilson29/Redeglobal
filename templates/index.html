@@ -8,10 +8,10 @@
     <link rel="icon" href="{{ url_for('static', filename='logo.png') }}">
 </head>
 <body>
-    <header>
+    <header class="topo">
         <img src="{{ url_for('static', filename='logo.png') }}" alt="RedeGlobal+" class="logo">
         <nav>
-            <ul>
+            <ul class="menu">
                 <li><a href="#">Início</a></li>
                 <li><a href="#">Internacional</a></li>
                 <li><a href="#">Tecnologia</a></li>
@@ -21,7 +21,7 @@
     </header>
 
     <main class="container">
-        <h1>Últimas Notícias</h1>
+        <h1 class="titulo-principal">🌍 Últimas Notícias</h1>
         <div class="noticias-grid">
             {% for noticia in noticias %}
             <div class="card">
