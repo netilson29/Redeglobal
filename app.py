@@ -5,35 +5,30 @@ from bs4 import BeautifulSoup
 app = Flask(__name__)
 
 def buscar_noticias():
-    try:
-        url = 'https://news.google.com/rss/search?q=tecnologia&hl=pt-PT&gl=PT&ceid=PT:pt'
-        resposta = requests.get(url)
-        soup = BeautifulSoup(resposta.content, 'xml')
-        itens = soup.find_all('item')[:10]
+    url = 'https://news.google.com/rss/search?q=tecnologia&hl=pt-PT&gl=PT&ceid=PT:pt'
+    resposta = requests.get(url)
+    
+    if resposta.status_code != 200:
+        return []  # Se falhar, retorna lista vazia
 
-        noticias = []
-        for item in itens:
-            titulo = item.title.text
-            link = item.link.text
-            descricao = item.description.text
+    soup = BeautifulSoup(resposta.content, 'xml')
+    itens = soup.find_all('item')[:10]
 
-            noticia = {
-                'titulo': titulo,
-                'link': link,
-                'resumo': descricao,
-                'imagem': 'https://source.unsplash.com/400x200/?technology'
-            }
-            noticias.append(noticia)
+    noticias = []
+    for item in itens:
+        titulo = item.title.text
+        link = item.link.text
+        descricao = item.description.text
 
-        return noticias
+        noticia = {
+            'titulo': titulo,
+            'link': link,
+            'resumo': descricao,
+            'imagem': 'https://source.unsplash.com/400x200/?technology,news'
+        }
+        noticias.append(noticia)
 
-    except Exception as e:
-        return [{
-            'titulo': 'Erro ao buscar notícias',
-            'link': '#',
-            'resumo': str(e),
-            'imagem': 'https://source.unsplash.com/400x200/?error'
-        }]
+    return noticias
 
 @app.route('/')
 def home():
