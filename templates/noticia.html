@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ noticia.titulo }} - RedeGlobal+</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='logo.png') }}">
+</head>
+<body>
+    <header class="topo">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+        <nav>
+            <ul class="menu">
+                <li><a href="{{ url_for('index') }}">Início</a></li>
+                <li><a href="{{ url_for('index') }}#atualidade">Atualidade</a></li>
+                <li><a href="{{ url_for('index') }}#sobre">Sobre</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main style="padding: 2rem;">
+        <h1 style="color:#0a2e50;">{{ noticia.titulo }}</h1>
+
+        {% if noticia.imagem %}
+        <img src="{{ noticia.imagem }}" alt="Imagem da notícia" style="max-width: 100%; height: auto; margin: 1rem 0;">
+        {% endif %}
+
+        <p style="font-size: 1.1rem; color: #444;">{{ noticia.conteudo|safe }}</p>
+
+        <div style="margin: 2rem 0; background-color: #f9f9f9; padding: 1rem; border-left: 4px solid #0a2e50;">
+            <p><strong>Publicidade</strong></p>
+            <!-- Aqui vai o script do PropellerAds depois -->
+            <a href="#" style="display: inline-block; padding: 0.5rem 1rem; background-color: #0a2e50; color: #fff; text-decoration: none; border-radius: 5px;">👉 Clique aqui</a>
+        </div>
+
+        <p><a href="{{ noticia.link }}" target="_blank" style="color: #005f99;">Ler no site original</a></p>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 RedeGlobal+ - Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

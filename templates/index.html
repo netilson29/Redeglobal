@@ -31,7 +31,7 @@
                 {% endif %}
                 <h2>{{ noticia.titulo }}</h2>
                 <p>{{ noticia.resumo }}</p>
-                <a href="{{ noticia.link }}" target="_blank" class="ler-mais">Ler mais</a>
+                <a href="{{ url_for('ver_noticia', tipo='noticias', id=loop.index0) }}" class="ler-mais">Ler mais</a>
             </div>
             {% endfor %}
         </div>
@@ -40,7 +40,7 @@
     <section id="atualidade">
         <h2 class="titulo-principal">🌐 Atualidade</h2>
         <div class="noticias-grid">
-            {% for noticia in noticias %}
+            {% for noticia in desporto %}
             <div class="card">
                 {% if noticia.imagem %}
                 <img src="{{ noticia.imagem }}" alt="Imagem">
@@ -49,7 +49,7 @@
                 {% endif %}
                 <h2>{{ noticia.titulo }}</h2>
                 <p>{{ noticia.resumo }}</p>
-                <a href="{{ noticia.link }}" target="_blank" class="ler-mais">Ler mais</a>
+                <a href="{{ url_for('ver_noticia', tipo='desporto', id=loop.index0) }}" class="ler-mais">Ler mais</a>
             </div>
             {% endfor %}
         </div>

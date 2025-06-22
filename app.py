@@ -1,36 +1,48 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, abort
 import feedparser
 import time
 
 app = Flask(__name__)
 
-CACHE = {
-    'noticias': [],
-    'ultimo_update': 0
-}
+# Cache para evitar recarregar os feeds a cada request
+CACHE = {'noticias': [], 'desporto': [], 'update': 0}
+INTERVAL = 1200  # 20 minutos
 
-FEED_URL = "https://g1.globo.com/rss/g1/"
+FEED_G1 = "https://g1.globo.com/rss/g1/"
+FEED_ZEROZERO = "https://www.zerozero.pt/rss.php"  # notícias de futebol
 
-def pegar_noticias():
+def carregar_feed(url, max_itens=8):
+    feed = feedparser.parse(url)
+    lista = []
+    for entry in feed.entries[:max_itens]:
+        lista.append({
+            'titulo': entry.title,
+            'resumo': entry.get('summary', '')[:200] + '…',
+            'conteudo': entry.get('summary', ''),
+            'link': entry.link,
+            'imagem': entry.get('media_content', [{}])[0].get('url', '')
+        })
+    return lista
+
+@app.route("/")
+def index():
     agora = time.time()
-    if agora - CACHE['ultimo_update'] > 1200:  # 20 minutos
-        feed = feedparser.parse(FEED_URL)
-        noticias = []
-        for entrada in feed.entries[:12]:
-            noticias.append({
-                'titulo': entrada.title,
-                'link': entrada.link,
-                'resumo': entrada.summary,
-                'imagem': entrada.get('media_content', [{}])[0].get('url', '')
-            })
-        CACHE['noticias'] = noticias
-        CACHE['ultimo_update'] = agora
-    return CACHE['noticias']
+    if agora - CACHE['update'] > INTERVAL:
+        CACHE['noticias'] = carregar_feed(FEED_G1)
+        CACHE['desporto'] = carregar_feed(FEED_ZEROZERO)
+        CACHE['update'] = agora
+    return render_template("index.html",
+                           noticias=CACHE['noticias'],
+                           desporto=CACHE['desporto'])
 
-@app.route('/')
-def inicio():
-    noticias = pegar_noticias()
-    return render_template('index.html', noticias=noticias)
+@app.route("/noticia/<tipo>/<int:id>")
+def ver_noticia(tipo, id):
+    if tipo not in CACHE:
+        abort(404)
+    if id < 0 or id >= len(CACHE[tipo]):
+        abort(404)
+    noticia = CACHE[tipo][id]
+    return render_template("noticia.html", noticia=noticia)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)
