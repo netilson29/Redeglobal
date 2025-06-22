@@ -4,11 +4,11 @@ import time
 
 app = Flask(__name__)
 
-# URLs dos Feeds
+# Feeds
 FEED_BRASIL = 'https://g1.globo.com/rss/g1/internacional/'
 FEED_PORTUGAL = 'https://www.rtp.pt/noticias/rss/internacional'
 
-# Cache das notícias
+# Cache
 cache = {
     'brasil': {'noticias': [], 'ultima_atualizacao': 0},
     'portugal': {'noticias': [], 'ultima_atualizacao': 0}
@@ -19,14 +19,11 @@ def buscar_rss(url):
     feed = feedparser.parse(url)
     noticias = []
     for entrada in feed.entries:
-        imagem = None
-        if 'media_content' in entrada and len(entrada.media_content) > 0:
-            imagem = entrada.media_content[0].get('url')
         noticias.append({
             'titulo': entrada.title,
             'resumo': entrada.summary,
             'link': entrada.link,
-            'imagem': imagem
+            'imagem': entrada.get('media_content', [{'url': None}])[0]['url'] if 'media_content' in entrada else None
         })
     return noticias
 
@@ -34,12 +31,12 @@ def buscar_rss(url):
 def index():
     agora = time.time()
 
-    # Atualiza Brasil
+    # Atualiza feed do Brasil
     if agora - cache['brasil']['ultima_atualizacao'] > INTERVALO_ATUALIZACAO:
         cache['brasil']['noticias'] = buscar_rss(FEED_BRASIL)
         cache['brasil']['ultima_atualizacao'] = agora
 
-    # Atualiza Portugal
+    # Atualiza feed de Portugal
     if agora - cache['portugal']['ultima_atualizacao'] > INTERVALO_ATUALIZACAO:
         cache['portugal']['noticias'] = buscar_rss(FEED_PORTUGAL)
         cache['portugal']['ultima_atualizacao'] = agora
