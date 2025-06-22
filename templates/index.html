@@ -24,7 +24,11 @@
         <div class="noticias-grid" id="internacional">
             {% for noticia in noticias %}
             <div class="card">
-                <img src="{{ noticia.imagem or url_for('static', filename='ney.png') }}" alt="Imagem da notícia">
+                {% if noticia.imagem and noticia.imagem.strip() %}
+                    <img src="{{ noticia.imagem }}" alt="Imagem da notícia">
+                {% else %}
+                    <img src="{{ url_for('static', filename='ney.png') }}" alt="Imagem padrão">
+                {% endif %}
                 <h2>{{ noticia.titulo }}</h2>
                 <p>{{ noticia.resumo }}</p>
                 <a href="{{ noticia.link }}" target="_blank" class="ler-mais">Ler mais</a>
@@ -35,8 +39,8 @@
 
     <section class="sobre" id="sobre">
         <h2>Sobre o RedeGlobal+</h2>
-        <p><strong>RedeGlobal+</strong> é um portal de notícias criado com dedicação e tecnologia por <strong>Aristides King</strong>.</p>
-        <p>Desenvolvido com 💻, paixão e foco em inovação digital.</p>
+        <p><strong>RedeGlobal+</strong> é um portal de notícias criado para conectar o mundo com as informações mais relevantes.</p>
+        <p>Desenvolvido com 💻, paixão e foco em inovação digital por <strong>Aristides King</strong>.</p>
         <p>Contato profissional: <a href="mailto:kingaristides@gmail.com">kingaristides@gmail.com</a></p>
     </section>
 
