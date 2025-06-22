@@ -6,6 +6,67 @@
     <title>{{ noticia.titulo }} - RedeGlobal+</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='logo.png') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 1rem;
+            background-color: #fdfdfd;
+        }
+
+        main {
+            max-width: 800px;
+            margin: auto;
+            padding: 1rem;
+        }
+
+        h1 {
+            color: #0a2e50;
+            font-size: 1.8rem;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 1rem 0;
+            border-radius: 8px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .anuncio {
+            margin: 2rem 0;
+            background: #f3f3f3;
+            padding: 1rem;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 0.5rem;
+            }
+
+            h1 {
+                font-size: 1.4rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <header class="topo">
@@ -19,22 +80,21 @@
         </nav>
     </header>
 
-    <main style="padding: 2rem;">
-        <h1 style="color:#0a2e50;">{{ noticia.titulo }}</h1>
+    <main>
+        <h1>{{ noticia.titulo }}</h1>
 
         {% if noticia.imagem %}
-        <img src="{{ noticia.imagem }}" alt="Imagem da notícia" style="max-width: 100%; height: auto; margin: 1rem 0;">
+        <img src="{{ noticia.imagem }}" alt="Imagem da notícia">
         {% endif %}
 
-        <p style="font-size: 1.1rem; color: #444;">{{ noticia.conteudo|safe }}</p>
+        <p>{{ noticia.conteudo | safe }}</p>
 
-        <div style="margin: 2rem 0; background-color: #f9f9f9; padding: 1rem; border-left: 4px solid #0a2e50;">
+        <div class="anuncio">
             <p><strong>Publicidade</strong></p>
-            <!-- Aqui vai o script do PropellerAds depois -->
-            <a href="#" style="display: inline-block; padding: 0.5rem 1rem; background-color: #0a2e50; color: #fff; text-decoration: none; border-radius: 5px;">👉 Clique aqui</a>
+            <a href="#">👉 Clique aqui</a>
         </div>
 
-        <p><a href="{{ noticia.link }}" target="_blank" style="color: #005f99;">Ler no site original</a></p>
+        <p><a href="{{ noticia.link }}" target="_blank">🔗 Ver notícia original</a></p>
     </main>
 
     <footer>
