@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 import requests
 from bs4 import BeautifulSoup
+import os
 
 app = Flask(__name__)
 
@@ -30,3 +31,7 @@ def buscar_noticias():
 def home():
     noticias = buscar_noticias()
     return render_template('index.html', noticias=noticias)
+
+if __name__ == '__main__':
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host='0.0.0.0', port=port)
