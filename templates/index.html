@@ -31,7 +31,7 @@
                     <img src="{{ url_for('static', filename='ney.png') }}" alt="Imagem padrão">
                 {% endif %}
                 <h2>{{ noticia.titulo }}</h2>
-                <p>{{ noticia.resumo }}</p>
+                <p>{{ noticia.resumo | safe }}</p>
                 <a href="{{ noticia.link }}" target="_blank" class="ler-mais">Ler mais</a>
             </div>
             {% endfor %}
@@ -47,7 +47,7 @@
                     <img src="{{ url_for('static', filename='ney.png') }}" alt="Imagem padrão">
                 {% endif %}
                 <h2>{{ noticia.titulo }}</h2>
-                <p>{{ noticia.resumo }}</p>
+                <p>{{ noticia.resumo | safe }}</p>
                 <a href="{{ noticia.link }}" target="_blank" class="ler-mais">Ler mais</a>
             </div>
             {% endfor %}
@@ -56,7 +56,7 @@
 
     <section class="sobre" id="sobre">
         <h2>Sobre o RedeGlobal+</h2>
-        <p><strong>RedeGlobal+</strong> é um portal de notícias criado para conectar o Brasil e Portugal com informações internacionais.</p>
+        <p><strong>RedeGlobal+</strong> é um portal de notícias criado para conectar o mundo com as últimas manchetes internacionais.</p>
         <p>Desenvolvido com 💻, paixão e foco em inovação digital por <strong>Aristides</strong>.</p>
         <p>Contato profissional: <a href="mailto:kingaristides@gmail.com">kingaristides@gmail.com</a></p>
     </section>
