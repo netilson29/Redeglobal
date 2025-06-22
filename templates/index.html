@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RedeGlobal+</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <img src="/static/logo.png" alt="RedeGlobal+" class="logo">
+        <nav>
+            <ul>
+                <li><a href="#">Início</a></li>
+                <li><a href="#">Internacional</a></li>
+                <li><a href="#">Tecnologia</a></li>
+                <li><a href="#">Sobre</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h1>Últimas Notícias</h1>
+        <div class="noticias-grid">
+            {% for noticia in noticias %}
+            <div class="card">
+                <img src="{{ noticia.imagem }}" alt="Imagem da notícia">
+                <h2>{{ noticia.titulo }}</h2>
+                <p>{{ noticia.resumo }}</p>
+                <a href="{{ noticia.link }}" target="_blank">Ler mais</a>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 RedeGlobal+ - Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>
